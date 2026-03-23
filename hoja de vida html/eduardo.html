@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de Vida | Eduardo Alvis</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f2027;
+    color:white;
+}
+
+/* ===== NAV ===== */
+nav{
+    position:fixed;
+    width:100%;
+    background:rgba(0,0,0,0.8);
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    padding:15px;
+    z-index:1000;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#00c6ff;
+}
+
+/* ===== SECCIONES ===== */
+section{
+    min-height:100vh;
+    padding:120px 80px 60px 80px;
+}
+
+h2{
+    margin-bottom:40px;
+    font-size:32px;
+    text-align:center;
+    color:#00c6ff;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:50px;
+    flex-wrap:wrap;
+}
+
+.header img{
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    border:5px solid #00c6ff;
+    object-fit:cover;
+}
+
+.header-text{
+    max-width:600px;
+}
+
+.header-text h1{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.header-text p{
+    font-size:18px;
+    opacity:0.9;
+}
+
+/* TARJETAS */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1c1c1c;
+    padding:20px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
+    border:1px solid #333;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#00c6ff;
+}
+
+.card-title{
+    font-size:18px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.hidden{
+    display:none;
+    margin-top:15px;
+    color:#ccc;
+}
+
+/* BARRAS */
+.progress{
+    background:#333;
+    height:18px;
+    border-radius:20px;
+    margin-top:10px;
+    overflow:hidden;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+    text-align:right;
+    padding-right:8px;
+    font-size:12px;
+    line-height:18px;
+    font-weight:bold;
+    transition:1s;
+}
+
+/* Animación scroll */
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:black;
+}
+/* ===== BOTÓN PDF ===== */
+#btn-pdf{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#00c6ff;
+    color:black;
+    border:none;
+    padding:12px 18px;
+    font-size:15px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,0.4);
+    z-index:2000;
+}
+
+#btn-pdf:hover{
+    background:#0072ff;
+    color:white;
+}
+
+/* ===== ESTILO SOLO PARA PDF ===== */
+@media print{
+
+    body{
+        background:white !important;
+        color:black !important;
+    }
+
+    nav,
+    #btn-pdf,
+    #jad {
+        display:none !important;
+    }
+
+    section{
+        min-height:auto !important;
+        padding:40px !important;
+        page-break-inside: avoid;
+    }
+
+    footer{
+        background:white !important;
+        color:black !important;
+    }
+
+    /* Quitar animaciones */
+    .fade{
+        opacity:1 !important;
+        transform:none !important;
+    }
+
+    .hidden{
+        display:block !important;
+    }
+}
+
+/* ===== FIX PDF BLANCO (ANIMACIONES) ===== */
+@media print{
+    .fade{
+        opacity:1 !important;
+        transform:none !important;
+    }
+
+    .hidden{
+        display:block !important;
+    }
+}
+
+/* ===== RESPONSIVE (DISEÑO ADAPTABLE) ===== */
+@media (max-width:768px){
+
+    section{
+        padding:120px 20px 60px 20px;
+    }
+
+    .header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    nav{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .header img{
+        width:150px;
+        height:150px;
+    }
+}
+/* ===== NOTIFICACIÓN FLOTANTE ===== */
+.toast{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#00c6ff;
+    color:black;
+    padding:15px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    box-shadow:0 5px 20px rgba(0,0,0,0.4);
+    transform:translateX(120%);
+    transition:0.5s;
+    z-index:3000;
+}
+
+.toast.show{
+    transform:translateX(0);
+}
+
+.btn-volver{
+    position:fixed;
+    top:80px;
+    left:25px;
+    background:#00c6ff;
+    color:black;
+    padding:8px 15px;
+    border-radius:20px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+    z-index:2000;
+}
+
+.btn-volver:hover{
+    background:#0072ff;
+    color:white;
+}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+<a href="#inicio">Inicio</a>
+<a href="#perfil">Perfil</a>
+<a href="#formacion">Formación</a>
+<a href="#habilidades">Habilidades</a>
+<a href="#experiencia">Experiencia</a>
+<a href="#idiomas">Idiomas</a>
+<a href="#referencias">Referencias</a>
+<a href="#jad">Comentarios</a>
+</nav>
+
+<a href="index.html" class="btn-volver">
+    <i class="fas fa-arrow-left"></i> Volver a Perfiles
+</a>
+
+<button id="btn-pdf" onclick="generarPDF()">
+    <i class="fas fa-file-pdf"></i> Descargar PDF
+</button>
+
+<!-- INICIO -->
+<section id="inicio">
+    <div class="header fade">
+        <img src="alvis.jpeg" alt="Foto de Elmer">
+        <div class="header-text">
+            <h1>Eduardo Jose Alvis Caro</h1>
+            <p style="color: #00c6ff; font-weight: bold; margin-bottom: 20px;">
+                Estudiante de Ingeniería de Software – Universidad de Cartagena
+            </p>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                
+                <div class="card" onclick="toggle(this)" style="padding: 10px;">
+                    <div class="card-title" style="font-size: 15px;">
+                        <i class="fas fa-phone"></i> Teléfono
+                    </div>
+                    <div class="hidden" style="font-size: 14px;">
+                        3024267449
+                    </div>
+                </div>
+
+                <div class="card" onclick="toggle(this)" style="padding: 10px;">
+                    <div class="card-title" style="font-size: 15px;">
+                        <i class="fas fa-envelope"></i> Correo
+                    </div>
+                    <div class="hidden" style="font-size: 14px;">
+                        eduardojalvis0615@gmail.com
+                    </div>
+                </div>
+
+                <div class="card" onclick="toggle(this)" style="padding: 10px;">
+                    <div class="card-title" style="font-size: 15px;">
+                        <i class="fas fa-map-marker-alt"></i> Ubicación
+                    </div>
+                    <div class="hidden" style="font-size: 14px;">
+                        San Jacinto, Bolívar
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil">
+<h2>Perfil Profesional</h2>
+<div class="grid fade">
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Ver Perfil <i class="fas fa-chevron-down"></i></div>
+<div class="hidden">
+Soy una persona con responsable, con aprendizaje lógico para la solución de algoritmos
+y poder solucionar problemas usando herramientas virtuales. 
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- FORMACION -->
+<section id="formacion">
+<h2>Formación Académica</h2>
+<div class="grid fade">
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Universidad de Cartagena</div>
+<div class="hidden">
+Ingeniería de Software – 4° Semestre
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+    <div class="card-title">PIO XII</div>
+
+    <div class="hidden">
+        Bachiller en la Institución Educativa PIO XII – Graduado
+
+        <!-- SUBTARJETA DEL DIPLOMA -->
+        <div class="card" onclick="event.stopPropagation(); toggle(this)" style="margin-top:15px;">
+            <div class="card-title">
+                📜 Diploma de Bachillerato <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <div class="hidden">
+                <img src="diploma alvis .jpeg" alt="Diploma de Bachillerato"
+                style="
+                width:100%;
+                margin-top:10px;
+                border-radius:10px;
+                border:2px solid #00c6ff;
+                transition:0.3s;
+                ">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+<h2>Habilidades Técnicas</h2>
+<div class="grid fade">
+
+    <div class="card" onclick="toggle(this)">
+        <div class="card-title">Programacion<i class="fas fa-chevron-down"></i></div>
+        <div class="hidden">
+             Desarrollo de lógica, estructuras de control y fundamentos de programación.
+            <div class="progress"><div class="bar" data-width="65%">65%</div></div>
+        </div>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+        <div class="card-title">Análisis de software <i class="fas fa-chevron-down"></i></div>
+        <div class="hidden">
+            Identificación de requerimientos, análisis funcional y comprensión de procesos.
+            <div class="progress"><div class="bar" data-width="65%">65%</div></div>
+        </div>
+    </div>
+
+    <div class="card" onclick="toggle(this)">
+        <div class="card-title">Diseño de base de Datos <i class="fas fa-chevron-down"></i></div>
+        <div class="hidden">
+           Modelado entidad-relación, normalización y estructuración eficiente de datos
+            <div class="progress"><div class="bar" data-width="70%">70%</div></div>
+        </div>
+    </div>
+
+
+</div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+<h2>Experiencia</h2>
+<div class="grid fade">
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Página Web Venta de Calzado</div>
+<div class="hidden">
+Desarrollo completo utilizando HTML, CSS y JavaScript con diseño adaptable.
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Página Web Tienda Comercial</div>
+<div class="hidden">
+Implementación de catálogo digital y estructura optimizada.
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- IDIOMAS -->
+<section id="idiomas">
+<h2>Idiomas</h2>
+<div class="grid fade">
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Español</div>
+<div class="hidden">
+Nativo
+<div class="progress">
+<div class="bar" data-width="100%">100%</div>
+</div>
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Inglés</div>
+<div class="hidden">
+Nivel Básico
+<div class="progress">
+<div class="bar" data-width="60%">60%</div>
+</div>
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">Portugués</div>
+<div class="hidden">
+Nivel Básico
+<div class="progress">
+<div class="bar" data-width="25%">25%</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<footer>
+    <!-- REFERENCIAS -->
+<section id="referencias">
+<h2>Referencias</h2>
+<div class="grid fade">
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">
+<i class="fas fa-user-tie"></i> Referencia Profesional
+</div>
+<div class="hidden">
+Elmer Andres Oviedo Vides<br>
+Compañero de estudio<br>
+Estudiante de Ingeniería de Software<br>
+Tel: 3015201655
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">
+<i class="fas fa-user-tie"></i> Referencia Profesional
+</div>
+<div class="hidden">
+Nestor Antonio Rodríguez Reyes<br>
+Compañero de estudio<br>
+Estudiante de Ingeniería de Software<br>
+Tel: 3246022802
+</div>
+</div>
+
+<div class="card" onclick="toggle(this)">
+<div class="card-title">
+<i class="fas fa-users"></i> Referencia Familiar
+</div>
+<div class="hidden">
+Edelmira Elena Caro Castro.<br>
+Madre<br>
+Fabricadora de artesanias.<br>
+Tel: 3106118811
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Deja tu comentario -->
+<section id="jad">
+<h2>Deja tu comentario</h2>
+<div class="grid fade">
+
+<div class="card">
+<div class="card-title">
+<i class="fas fa-comments"></i> Sugerencias o Comentarios
+</div>
+
+<div class="hidden" style="display:block;">
+
+<form id="comentarioForm"
+      action="https://formspree.io/f/mojnownk"
+      method="POST">
+
+<input type="text" name="nombre" placeholder="Nombre"
+style="width:100%;padding:8px;margin:8px 0;border-radius:5px;border:none;" required>
+
+<input type="email" name="email" placeholder="Correo"
+style="width:100%;padding:8px;margin:8px 0;border-radius:5px;border:none;" required>
+
+<textarea name="mensaje" placeholder="Escribe tu sugerencia..."
+style="width:100%;padding:8px;margin:8px 0;border-radius:5px;border:none;" required></textarea>
+
+<button id="btnEnviar" type="submit"
+style="padding:8px 15px;background:#00c6ff;border:none;border-radius:5px;cursor:pointer;">
+Enviar
+</button>
+
+</form>
+
+</div>
+</div>
+
+</div>
+</section>
+
+© 2026 - Eduardo Alvis
+</footer>
+
+<script>
+
+function toggle(card){
+
+    // 🔊 Reproducir sonido
+    const sound = document.getElementById("clickSound");
+    sound.currentTime = 0;
+    sound.play();
+
+    const section = card.parentElement;
+    const cards = section.querySelectorAll(".card");
+    
+    cards.forEach(c=>{
+        if(c!==card){
+            c.querySelector(".hidden").style.display="none";
+            const bars=c.querySelectorAll(".bar");
+            bars.forEach(bar=>bar.style.width="0%");
+        }
+    });
+
+    const hidden = card.querySelector(".hidden");
+    const bars = card.querySelectorAll(".bar");
+
+    if(hidden.style.display==="block"){
+        hidden.style.display="none";
+        bars.forEach(bar=>bar.style.width="0%");
+    }else{
+        hidden.style.display="block";
+        bars.forEach(bar=>{
+            bar.style.width=bar.getAttribute("data-width");
+        });
+    }
+}
+
+// Animación scroll
+const faders = document.querySelectorAll('.fade');
+const appearOptions = {threshold:0.3};
+
+const appearOnScroll = new IntersectionObserver(function(entries){
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }
+    });
+}, appearOptions);
+
+faders.forEach(fader=>{
+    appearOnScroll.observe(fader);
+});
+
+function generarPDF(){
+
+    // Abrir todas las tarjetas
+    document.querySelectorAll(".hidden").forEach(h=>{
+        h.style.display="block";
+    });
+
+    // Llenar todas las barras 
+    document.querySelectorAll(".bar").forEach(bar=>{
+        bar.style.width = bar.getAttribute("data-width");
+    });
+
+    // Abrir diálogo de guardar PDF
+    setTimeout(()=>{
+        window.print();
+    },500);
+}
+// ===== ENVÍO CON NOTIFICACIÓN FLOTANTE =====
+document.addEventListener("DOMContentLoaded", function(){
+
+const form = document.getElementById("comentarioForm");
+const btn = document.getElementById("btnEnviar");
+const toast = document.getElementById("toast");
+
+form.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.innerText = "Enviando...";
+
+    const data = new FormData(form);
+
+    try {
+        const response = await fetch("https://formspree.io/f/mojnownk", {
+            method: "POST",
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if(response.ok){
+            form.reset();
+            toast.classList.add("show");
+
+            setTimeout(()=>{
+                toast.classList.remove("show");
+            },3000);
+        } else {
+            alert("Hubo un problema al enviar el mensaje.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Error real de conexión.");
+    }
+
+    btn.disabled = false;
+    btn.innerText = "Enviar";
+});
+
+});
+</script>
+<audio id="clickSound" preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+</audio>
+<div id="toast" class="toast">
+✔ Comentario enviado exitosamente
+</div>
+</body>
+</html>
